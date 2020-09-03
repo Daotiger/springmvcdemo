@@ -12,5 +12,6 @@
 </head>
 <body>
     <h2>student</h2>
+    ${studentList}
 </body>
 </html>

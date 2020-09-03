@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--指定扫描的基包名-->
+    <context:component-scan base-package="com.syau.hello"></context:component-scan>
+
+    <context:property-placeholder  location="classpath:db.properties"></context:property-placeholder>
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${myDriverClass}" ></property>
+        <property name="url" value="${myUrl}"></property>
+        <property name="username" value="${myUsername}"></property>
+        <property name="password" value="${myPassword}"></property>
+        <property name="maxWait" value="3000"></property>
+        <property name="maxActive" value="100"></property>
+        <!--Druid监控-->
+        <property name="filters" value="wall,stat"/>
+    </bean>
+
+    <!--创建 JDBCTemplate对象 -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--    <bean id="studentDaoImpl" class="com.syau.hello.dao.impl.StudentDaoImpl">-->
+    <!--        <property name="jdbcTemplate" ref="jdbcTemplate"></property>-->
+    <!--    </bean>-->
 
 </beans>
